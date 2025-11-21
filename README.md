@@ -1,86 +1,76 @@
-WARNINGS twitter data too large to be submitted on moodle!!!!
-also the results vary in each run as it has some randomised steps!!
+# Improved Louvain Algorithm for Community Detection
+
+This repository contains a high-performance C++ implementation of the Louvain Algorithm and improved Fast Louvain for community detection in large-scale networks. 
+<img width="1147" height="750" alt="output_facebook" src="https://github.com/user-attachments/assets/3bd14f6c-d727-4e49-a4de-6b84f636e84d" />
+<img width="1857" height="1010" alt="output_twitter_tooHeavytoBeColored" src="https://github.com/user-attachments/assets/90e0b910-05d1-4210-b6d5-6bc900b0ddd2" />
+
+##  Prerequisites
+
+* **Compiler:** `g++` with C++17 support.
+* **Visualization Tool:** [Gephi](https://gephi.org/) (Recommended for large graphs).
+
+## Project Structure
+
+* `main.cpp`: Entry point. Handles file I/O, runs the hierarchy benchmark, and exports results.
+* `Louvain.h / .cpp`: Core implementation. Contains the `run_phase_one` (modularity optimization) and `run_phase_two` (aggregation) logic, including the pruning and dynamic iteration features.
+* `Graph.h / .cpp`: Efficient Adjacency List graph data structure.
+* `facebook.txt` / `karate.txt`: Sample datasets (Edge lists).
 
 
-This project is a high-performance C++ implementation of the Louvain Algorithm for community detection in large networks. It features a standard implementation alongside an "Improved/Fast" mode that utilizes Tree Splitting and Dynamic Iterative Optimization to significantly reduce computation time on large-scale graphs.
-# Project Structure
+## Build & Run
 
-* `main.cpp`: The entry point. Runs the benchmark, compares Standard vs. Fast modes, and writes results to CSV.
-* `Louvain.h / .cpp`: The core algorithm implementation. Contains logic for pruning, modularity calculation, and hierarchical aggregation.
-* `Graph.h / .cpp`: Efficient adjacency list representation of the graph.
-* `visualize.py`: Python script to plot the graph colored by community.
-* `facebook.txt` or `twitter_combined.txt`: Input graph datasets (Edge lists).
+### 1. Compilation
+Open your terminal in the project directory and run the following command:
 
-#Compilation
-Prerequisites
-g++ compiler supporting C++17
-Gephi (for visualization)
+```bash g++ -std=c++17 -Wall -o louvain_dsa main.cpp Graph.cpp Louvain.cpp```
 
+### 2. Execution
+Ensure your input graph file (e.g., `facebook.txt`) is in the same directory and run:
 
-Open your terminal in the project directory and run:
+```bash
+./louvain_dsa
+````
+<img width="487" height="619" alt="output_twitter_code" src="https://github.com/user-attachments/assets/8773c37a-1c58-4da0-8aa5-f6c86bda3fe0" />
+Warning: The Louvain algorithm (both Standard and Fast versions) relies on randomized node ordering during the optimization phase to avoid local optima and bias. As a result, running the algorithm multiple times on the same dataset may yield slightly different community structures (number of communities or specific node assignments) and modularity scores.
 
-```g++ -std=c++17 -Wall -o louvain_dsa main.cpp Graph.cpp Louvain.cpp```
+### 3\. Output
 
-Compilation
-Open your terminal in the project directory and run the following command to compile the code:
+The program will output benchmark statistics to the console, showing the number of calculation steps saved by the Fast implementation. It also generates two CSV files for visualization:
 
+  * `communities_std.csv` (Standard Result)
+  * `communities_fast.csv` (Optimized Result)
 
-How to Run
-Ensure your input graph file (e.g., facebook.txt) is in the same directory.
+## 📊 Visualization Workflow (Gephi)
 
-Run the executable: ./louvain_dsa
-The program will run the benchmark and generate two output files:
+For large networks, use Gephi to visualize the community structure.
 
-communities_std.csv
+### Step 1: Prepare Data
 
-communities_fast.csv
+  * Rename your input graph file from `.txt` to `.csv` (e.g., `facebook.csv`).
 
-Visualization with Gephi
-Follow these steps to visualize the results using Gephi.
+### Step 2: Import Edges
 
-1. Prepare the Data
-Rename your input graph file from .txt to .csv (e.g., rename facebook.txt to facebook.csv).
+1.  Open Gephi and navigate to the **Data Laboratory** tab.
+2.  Click **Import Spreadsheet**.
+3.  Select `facebook.csv`.
+4.  **Important:** In the settings, change the **Separator** to **Space**.
+5.  Ensure the table type is **Edges table** and click **Finish**.
 
-2. Import Edges
-Open Gephi and click on the Data Laboratory tab.
+### Step 3: Import Communities
 
-Click Import Spreadsheet.
+1.  Click **Import Spreadsheet** again.
+2.  Select the output file `communities_fast.csv`.
+3.  Ensure the table type is **Nodes table**.
+4.  Click **Finish**.
+5.  **Critical:** In the import report, select **Append to existing workspace** to merge the community data with the existing nodes.
 
-Select your graph file (facebook.csv).
+### Step 4: Color & Layout
 
-In the settings window, change the Separator to Space.
+1.  Go to the **Overview** tab.
+2.  **Color:** In the **Appearance** pane (top-left), select **Nodes** -\> **Partition** (icon) -\> **CommunityId** -\> **Apply**.
+3.  **Layout:** In the **Layout** pane (bottom-left), select **ForceAtlas 2**. Click **Run** and wait for the clusters to separate, then click **Stop**.
 
-Ensure the table type is set to Edges table.
+<!-- end list -->
 
-Click Finish.
-
-3. Import Communities
-Click Import Spreadsheet again.
-
-Select the output file generated by the C++ program (communities_fast.csv).
-
-Ensure the table type is set to Nodes table.
-
-Click Finish.
-
-In the import report window, select Append to existing workspace. This step is critical to merge the community data with the graph.
-
-4. Color by Community
-Switch to the Overview tab.
-
-Locate the Appearance pane on the top-left.
-
-Click on Nodes and then the Partition icon (pie chart).
-
-Select CommunityId from the dropdown menu.
-
-Click Apply.
-
-5. Apply Layout
-Locate the Layout pane on the bottom-left.
-
-Select ForceAtlas 2 from the dropdown menu.
-
-Click Run.
-
-Wait for the graph clusters to separate and stabilize, then click Stop.
+```
+```
