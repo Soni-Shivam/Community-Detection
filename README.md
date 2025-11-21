@@ -16,6 +16,7 @@ This repository contains a high-performance C++ implementation of the Louvain Al
 * `Graph.h / .cpp`: Efficient Adjacency List graph data structure.
 * `facebook.txt` / `karate.txt`: Sample datasets (Edge lists).
 
+
 ## Build & Run
 
 ### 1. Compilation
@@ -30,6 +31,7 @@ Ensure your input graph file (e.g., `facebook.txt`) is in the same directory and
 ./louvain_dsa
 ````
 <img width="487" height="619" alt="output_twitter_code" src="https://github.com/user-attachments/assets/8773c37a-1c58-4da0-8aa5-f6c86bda3fe0" />
+Warning: The Louvain algorithm (both Standard and Fast versions) relies on randomized node ordering during the optimization phase to avoid local optima and bias. As a result, running the algorithm multiple times on the same dataset may yield slightly different community structures (number of communities or specific node assignments) and modularity scores.
 
 ### 3\. Output
 
