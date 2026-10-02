@@ -1,6 +1,9 @@
-# Improved Louvain Algorithm for Community Detection
+# Improved(?) Louvain Algorithm for Community Detection
 
 This repository contains a high-performance C++ implementation of the Louvain Algorithm and improved Fast Louvain for community detection in large-scale networks. 
+
+Project Report and Presentation can be found in the repo along with the source codes.
+
 <img width="1147" height="750" alt="output_facebook" src="https://github.com/user-attachments/assets/3bd14f6c-d727-4e49-a4de-6b84f636e84d" />
 <img width="1857" height="1010" alt="output_twitter_tooHeavytoBeColored" src="https://github.com/user-attachments/assets/90e0b910-05d1-4210-b6d5-6bc900b0ddd2" />
 
